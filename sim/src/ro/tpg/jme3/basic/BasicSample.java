@@ -1,4 +1,4 @@
-package ro.tpg.basic;
+package ro.tpg.jme3.basic;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
