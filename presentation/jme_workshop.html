@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>3D simulation in jME3</title>
+
+        <meta name="description" content="SelfMeUp - The Social Network for Selfie Addicts">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/tpg/tpg.css" id="theme">        
+
+        <!-- <link rel="stylesheet" href="css/print/pdf.css"> -->
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h3>3D simulation in jME3</h3>
+                    <br /><br />
+                    <p>                        
+                        <a href="mailto:karoly.szanto@3pillarglobal.com">Károly Szántó</a>                       
+                    </p>
+
+                    <aside class="notes">
+                    </asside>
+                </section>
+
+                <section>
+                    <h3>Prerequisites</h3>
+
+                    <p>
+                        <ol>
+                            <li>Java Development Kit (<a target ="#" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">download</a>)</li>
+                            <li>jMonkey Engine 3 SDK (<a target ="#" href="http://hub.jmonkeyengine.org/downloads/">download</a>)</li>
+                            <li>GitHub: <a href="https://github.com/ksza/jme3_workshop">ksza/jme3_workshop</a></li>
+                        </ol>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Who am I?</h3>
+                    <br /><br />
+                    <p>                        
+                        <ul>
+                            <li>Android Developer @3PG</li>
+                            <li>Software Enthusiast</li>
+                            <li>
+                                Master's in Ubicomp
+                                <ul>
+                                    <li>Research: Persuasive Personal Monitoring for Bipolar Patients</li>
+                                    <li>Thesis: Simulation Framework for Context-Aware Environments</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </p>
+
+                    <aside class="notes">
+                    </asside>
+                </section>
+
+                <section>
+                    <h3>Why 3D Simulation?</h3>
+                    <br /><br />
+                    <p>                        
+                        <ul>
+                            <li>It's a "must have" tool in solving certain kind of problems</li>
+                            <li>It's not an every-day topic</li>
+                            <li>It's fun</li>
+                        </ul>
+                    </p>
+
+                    <aside class="notes">
+                    </asside>
+                </section>
+
+                <section>
+                    <h3>Why jMonkey Engine?</h3>
+                    <br /><br />
+                    <p>                        
+                        <ul>
+                            <li>Because Java programmers can make the most amazing games</li>                   
+                            <li>It's a 3D game engine for adventurous Java developers</li>
+                            <li>It's open source, cross platform and cutting edge</li>
+                            <li>It's all beautifully documented - huge community around it</li>
+                            <li>Really easy to get into</li>
+                        </ul>
+                    </p>
+
+                    <aside class="notes">
+                    </asside>
+                </section>
+
+                <section>
+                    <h3>Agenda</h3>
+
+                    <p>
+                        <ol>
+                            <li>Basic game engine concepts</li>
+                            <li>How would you use 3D simulation?</li>
+                            <li>Exploring the jME IDE & SDK</li>
+                            <li>Creating a simple scene</li>                            
+                            <li>First-Person Interaction</li>
+                            <li>Building a simulation</li>
+                        </ol>
+                    </p>
+                </section>
+
+                <section>    
+                    <section>
+                        <h3>Game Engine Concepts</h3>
+
+                        <p>[ architecture ]</p>
+
+                        <p>
+                            <img src="assets/game_engine_architecture.png" width="80%" />
+                        </p>
+                    </section>
+
+                    <section>
+                        <h4>Scene Graph</h4>
+
+                        <p>
+                            <img src="assets/scene_graph.png" width="80%" />
+                        </p>
+                    </section>
+
+                    <section>
+                        <h3>Spatial</h3>
+
+                        <p>
+                            The base entity for scene graph nodes. It maintains a link to a parent, it's local transforms and the world's transforms
+                        </p>                        
+                    </section>
+
+                    <section>
+                        <h4>Coordinate System</h4>
+
+                        <p>
+                            <img src="assets/coordinate_system.png" width="60%" />
+                        </p>
+                    </section> 
+
+                    <section>
+                        <h3>Node</h3>
+
+                        <p>
+                            An invisible "handle" for scene objects which groups Geometries and other Nodes (audio, light, etc) together
+                        </p>                      
+                    </section>
+
+                    <section>
+                        <h3>Geometry</h3>
+
+                        <p>
+                            Leaf node in the scene graph. A visible object on the screen which stores the object's looks (mesh and material)
+                        </p>                        
+                    </section>
+
+                    <section>
+                        <h3>Mesh & Material</h3>
+
+                        <ul>
+                            <li>Mesh - made up by polygons</li>
+                            <li>
+                                Material
+                                <ul>
+                                    <li>"Unshaded" materials - look somewhat abstract as they ignore lighting and shading</li>
+                                    <li>Illuminated materials require a light source added to at least one of their parent nodes</li>
+                                </ul>
+                            </li>
+                        </ul>              
+                    </section>
+
+                    <section>
+                        <h3>Camera</h3>
+
+                        <p>
+                            <img src="assets/view_frustum.png" width="70%" />
+                        </p>
+                    </section>
+
+                    <section>
+                        <h3>Bounding Volume</h3>
+
+                        <p>
+                            3D objects can have irregular forms, other that basic 3D geometrical shapes. To aid mathematical computation, they are wrapped in a bounding volume which pragmatically represents the object as a sphere, cube, cylinder, etc.  
+                        </p>
+                    </section>  
+
+                    <section>
+                        <h3>Ray Casting</h3>
+
+                        <p>
+                            A vector starting from the certain point of an entity having either a finite or infinite length. It determines which objects in the 3D space it intersected <br /><br /> (useful to compute distance)
+                        </p>
+                    </section>                    
+                </section>
+
+                <section>
+                    <section>
+                        <h3>How would you use 3D simulation?</h3>
+                    </section>
+
+                    <section>
+                        <ul>
+                            <li>Ubicomp</li>
+                            <li>Context-Awareness & Context</li>
+                            <li>Context-Aware Systems</li>
+                        </ul>
+
+                        <aside class="notes">
+<small><ul>
+    <li>
+        Ubicomp = viziunea acestui concept e sa integreze cat mai bine tehnologia in vietile noastre de
+        zi cu zi. Sistemele sunt menite sa preia din interactiunea explicita si sa o faca cat mai implicita
+        bazat pe starea curenta a sistemului
+    </li>
+    <li>
+        Context-Awareness = parte a ubicomp care se ocupa de a lega schimbarile in environment de sisteme care, de altfel, sunt static
+    </li>
+    <li>
+        Context = orice informatie care poate caracteriza starea unei entitati, unde o entitate poate fi
+        o persoana, un loc, un obiec fizic sau device
+    </li>
+    <li>
+        Context-Aware System = folosesc date de context pt a oferi utilizatorului servicii bazate pe
+        starea sa curenta. E.g. -> the "city guide" example
+    </li>
+</ul></small>                            
+                        </aside>                        
+                    </section>                    
+                </section>
+
+                <section>
+                    <h3>Exploring the jME IDE & SDK</h3>
+                </section>
+
+                <section>
+                    <h3>Creating a simple scene</h3>
+                </section>
+
+                <section>
+                    <h3>First-Person Interaction</h3>
+                </section>                
+
+                <section>
+                    <section>
+                        <h3>Building a simulation</h3>
+                    </section>
+
+                    <section>
+
+                        <h3>Suggested Tasks</h3>    
+
+                        <ul>
+                            <li>Only interact with an object when within certain range</li>
+                            <li>The agent should be able to play the piano</li>
+                            <li>
+                                Place a light bulb in the kitchen and bathroom. Make them aware of the agent's proximity and light them up when the agent is within desired range
+                            </li>
+                            <li>
+                                Enable picking up the coffee pot and pouring liquid into the cup (a sound should be played)
+                            </li>
+                        </ul>
+                    </section>                       
+                </section>    
+
+                <!-- Final -->
+                <section>
+                    <h1>Thank You!</h1>
+                    
+                    <br /><br />
+                    <p>
+                        <a href="mailto:szanto.karoly@gmail.com">Károly Szántó</a>
+                    </p>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+                width: 1000,
+                height: 700,                
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Parallax scrolling
+                // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+                // parallaxBackgroundSize: '2100px 900px',
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+        <div class="about-stuff" style="display: none; position: absolute; bottom: 14px; left: 40%; z-index: 20;">
+                8 November 2014 | GitHub: ksza / <a target ="#" href="https://github.com/ksza/jme3_workshop">jme3_workshop</a>
+        </div>
+
+        <script>
+            if( !navigator.userAgent.match( /(iphone|android)/gi ) && !!document.querySelector ) {
+                document.querySelector( '.about-stuff' ).style.display = 'block';
+            }
+        </script>
+    </body>
+</html>
